@@ -6,7 +6,8 @@
     <title>FreelaApp - Conectando Clientes e Profissionais</title>
     <!-- Importa o Tailwind CSS para estilização moderna -->
     <script src="https://cdn.tailwindcss.com"></script>
-
+    <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-2225154349342173"
+     crossorigin="anonymous"></script>
 </head>
 <body class="bg-gray-50 text-gray-800 flex flex-col min-h-screen">
 
