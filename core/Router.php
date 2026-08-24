@@ -2,42 +2,45 @@
 namespace Core;
 
 class Router {
-    // Guarda todas as rotas registradas (GET e POST)
     private array $routes = [];
 
-    // Registra uma rota do tipo GET
     public function get(string $path, array $handler): void {
         $this->routes['GET'][$path] = $handler;
     }
 
-    // Registra uma rota do tipo POST (para formulários)
     public function post(string $path, array $handler): void {
         $this->routes['POST'][$path] = $handler;
     }
 
-    // Processa a URL atual de forma inteligente e descobre o que fazer
-        // Processa a URL atual na hospedagem e descobre o que fazer
-        public function resolve(): void {
+    public function resolve(): void {
         $method = $_SERVER['REQUEST_METHOD'];
 
+        // 1. Captura o caminho enviado pelo servidor
         if (isset($_GET['url'])) {
             $url = '/' . rtrim($_GET['url'], '/');
         } else {
             $requestUri = parse_url($_SERVER['REQUEST_URI'], PHP_URL_PATH);
-            
-            // Remove os caminhos locais do XAMPP se eles existirem na URL
-            $url = str_replace('/freela-app/public', '', $requestUri);
-            $url = str_replace('/public', '', $url); 
-            $url = $url === '' ? '/' : '/' . rtrim(ltrim($url, '/'), '/');
+            $url = $requestUri;
         }
 
+        // 2. LIMPEZA TOTAL DA URL (Remove pastas locais e a palavra public se o servidor injetar)
+        $url = str_replace('/freela-app/public', '', $url);
+        $url = str_replace('/freela-app', '', $url);
+        $url = str_replace('/public', '', $url);
+        
+        // Garante a formatação correta com a barra no início e sem barra no fim
+        $url = '/' . rtrim(ltrim($url, '/'), '/');
+
+        // Divide a URL para arrancar parâmetros de busca fora (Ex: ?id=1 ou ?erro=1)
         $urlParts = explode('?', $url);
         $cleanUrl = $urlParts[0]; 
 
-        if ($cleanUrl === '' || $cleanUrl === '/public') {
+        // Se a rota vier limpa como barra dupla ou vazia, vira a raiz '/'
+        if ($cleanUrl === '//' || $cleanUrl === '') {
             $cleanUrl = '/';
         }
 
+        // 3. Executa a rota se ela existir na lista
         if (isset($this->routes[$method][$cleanUrl])) {
             $handler = $this->routes[$method][$cleanUrl];
             $controllerClass = $handler[0];
@@ -52,9 +55,9 @@ class Router {
             }
         }
 
+        // Se mesmo limpando tudo a rota não bater, exibe o erro 404 de ajuda
         http_response_code(404);
         echo "<h1>🚫 Página não encontrada (Erro 404)</h1>";
         echo "<p>O roteador não encontrou o caminho: <strong>[$method] $cleanUrl</strong></p>";
     }
-
 }
