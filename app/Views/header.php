@@ -15,32 +15,38 @@
     <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
                    <!-- Links do Menu Otimizados e Compactos para Mobile -->
             <!-- Reduzido o gap no celular (gap-2) e ampliado no PC (md:gap-4) -->
-            <div class="flex items-center gap-2 md:gap-4">
-                <a href="/" class="text-xs md:text-sm text-gray-600 hover:text-indigo-600 font-medium transition">Início</a>
-                <a href="/profissionais" class="text-xs md:text-sm text-gray-600 hover:text-indigo-600 font-medium transition">Buscar</a>
-                <a href="/noticias" class="text-xs md:text-sm text-gray-600 hover:text-indigo-600 font-medium transition hidden sm:inline-block">Vagas</a> <!-- Esconde esse link em telas muito pequenas para não esmagar o topo -->
+                        <!-- Links do Menu - Ajustados para NUNCA sumirem no Celular -->
+            <!-- Usamos text-[11px] para celular e text-sm no PC para caber tudo perfeitamente lado a lado -->
+            <div class="flex items-center gap-2.5 md:gap-5">
+                <a href="/" class="text-[11px] md:text-sm text-gray-600 hover:text-indigo-600 font-medium transition">Início</a>
+                <a href="/profissionais" class="text-[11px] md:text-sm text-gray-600 hover:text-indigo-600 font-medium transition">Buscar</a>
+                <a href="/noticias" class="text-[11px] md:text-sm text-gray-600 hover:text-indigo-600 font-medium transition">Vagas</a>
+                <a href="/sobre" class="text-[11px] md:text-sm text-gray-600 hover:text-indigo-600 font-medium transition">Sobre</a>
                 
+                <span class="h-4 w-px bg-gray-200 block"></span>
+
                 <?php if (isset($_SESSION['admin_id'])): ?>
+                    <!-- Administrador Logado -->
                     <a href="/admin/painel" class="text-[10px] md:text-xs bg-gray-900 text-amber-400 px-2 py-1 rounded-lg font-bold border border-amber-500/30">Admin 👑</a>
-                    <a href="/admin/sair" class="text-xs text-red-500 hover:underline">Sair</a>
+                    <a href="/admin/sair" class="text-[11px] md:text-xs text-red-500 hover:underline">Sair</a>
 
                 <?php elseif (isset($_SESSION['user_id'])): ?>
+                    <!-- Usuário Comum Logado -->
                     <?php if ($_SESSION['user_type'] === 'professional'): ?>
-                        <a href="/painel" class="bg-indigo-50 text-indigo-700 px-2.5 py-1.5 rounded-lg text-[11px] font-bold border border-indigo-100">Painel 🛠️</a>
+                        <a href="/painel" class="bg-indigo-50 text-indigo-700 px-2 py-1 rounded-lg text-[10px] md:text-xs font-bold border border-indigo-100">Painel 🛠️</a>
                     <?php else: ?>
-                        <a href="/meus-pedidos" class="text-xs text-indigo-600 font-semibold">Pedidos 📋</a>
+                        <a href="/meus-pedidos" class="text-[11px] md:text-sm text-indigo-600 font-semibold">Pedidos 📋</a>
                     <?php endif; ?>
                     
-                    <!-- Opcional: O nome do usuário fica escondido no celular (hidden) e aparece no PC (md:inline-block) para economizar espaço crítico de tela -->
-                    <span class="text-xs font-semibold text-gray-700 max-w-[100px] truncate hidden md:inline-block">
-                        Olá, <?php echo htmlspecialchars($_SESSION['user_name']); ?> 👋
-                    </span>
-                    <a href="/sair" class="text-xs text-red-600 font-medium transition ml-1">Sair</a>
+                    <!-- Exibe apenas um botão compacto de Sair no celular para não amassar a tela -->
+                    <a href="/sair" class="text-[11px] md:text-xs text-red-600 font-medium transition ml-1">Sair</a>
 
                 <?php else: ?>
-                    <a href="/login" class="bg-indigo-600 text-white px-3 py-1.5 rounded-lg text-xs font-medium hover:bg-indigo-700 transition shadow-xs">Entrar</a>
+                    <!-- Visitante Deslogado -->
+                    <a href="/login" class="bg-indigo-600 text-white px-2.5 py-1.5 rounded-lg text-[11px] md:text-xs font-medium hover:bg-indigo-700 transition shadow-xs">Entrar</a>
                 <?php endif; ?>
             </div>
+
 
     </div>
 </nav>
