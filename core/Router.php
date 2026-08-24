@@ -16,25 +16,27 @@ class Router {
     }
 
     // Processa a URL atual de forma inteligente e descobre o que fazer
+        // Processa a URL atual na hospedagem e descobre o que fazer
     public function resolve(): void {
         $method = $_SERVER['REQUEST_METHOD'];
 
-        // 1. Captura a URL vinda do .htaccess do XAMPP
+        // 1. Captura a URL vinda do .htaccess
         if (isset($_GET['url'])) {
             $url = '/' . rtrim($_GET['url'], '/');
         } else {
             $requestUri = parse_url($_SERVER['REQUEST_URI'], PHP_URL_PATH);
-            // Remove a pasta do projeto da rota para o roteador não se confundir
+            // Remove as pastas do caminho para não confundir o roteador na nuvem
             $url = str_replace('/freela-app/public', '', $requestUri);
+            $url = str_replace('/public', '', $url); // <-- NOVO: Remove o /public se o servidor injetar ele na URI
             $url = $url === '' ? '/' : '/' . rtrim(ltrim($url, '/'), '/');
         }
 
-        // 2. CORREÇÃO CRÍTICA: Limpa os parâmetros de busca (como ?url= ou ?erro=) pegando apenas a rota limpa
+        // 2. Limpa os parâmetros de busca pegando apenas a rota limpa
         $urlParts = explode('?', $url);
-        $cleanUrl = $urlParts[0]; // <-- Pega apenas o primeiro pedaço (o texto da rota)
+        $cleanUrl = $urlParts[0]; 
 
-        // Garante que a raiz vazia sempre vire '/'
-        if (empty($cleanUrl)) {
+        // Se a rota limpada vier como '/public' ou vazia, joga para a raiz '/'
+        if ($cleanUrl === '' || $cleanUrl === '/public') {
             $cleanUrl = '/';
         }
 
@@ -44,11 +46,8 @@ class Router {
             $controllerClass = $handler[0];
             $action = $handler[1];
 
-            // Instancia o controlador de forma automática
             if (class_exists($controllerClass)) {
                 $controller = new $controllerClass();
-                
-                // Executa a função do controlador
                 if (method_exists($controller, $action)) {
                     $controller->$action();
                     return;
@@ -56,9 +55,10 @@ class Router {
             }
         }
 
-        // Se a rota não existir, exibe erro 404 detalhado
+        // Se mesmo limpando tudo a rota não bater, exibe o erro 404 de ajuda
         http_response_code(404);
         echo "<h1>🚫 Página não encontrada (Erro 404)</h1>";
         echo "<p>O roteador não encontrou o caminho: <strong>[$method] $cleanUrl</strong></p>";
     }
+
 }
