@@ -12,11 +12,11 @@
 
     <!-- Botões de Ação Principais -->
     <div class="mt-10 flex flex-col sm:flex-row justify-center gap-4">
-        <a href="/freela-app/public/profissionais" class="bg-indigo-600 text-white px-8 py-4 rounded-xl font-semibold text-lg hover:bg-indigo-700 transition shadow-md hover:shadow-lg text-center">
+        <a href="/profissionais" class="bg-indigo-600 text-white px-8 py-4 rounded-xl font-semibold text-lg hover:bg-indigo-700 transition shadow-md hover:shadow-lg text-center">
     🔍 Encontrar Profissional
 </a>
 
-        <a href="/freela-app/public/cadastrar" class="bg-white text-gray-700 border border-gray-200 px-8 py-4 rounded-xl font-semibold text-lg hover:bg-gray-50 transition shadow-xs text-center">
+        <a href="/cadastrar" class="bg-white text-gray-700 border border-gray-200 px-8 py-4 rounded-xl font-semibold text-lg hover:bg-gray-50 transition shadow-xs text-center">
     🛠️ Quero Oferecer Serviços
 </a>
     </div>
