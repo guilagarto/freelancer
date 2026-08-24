@@ -1,0 +1,12 @@
+# Esconde as senhas locais e dados do banco de dados
+.env
+
+# Esconde os arquivos que o composer baixa da internet (a hospedagem baixa depois sozinha)
+/vendor/
+composer.lock
+
+# Esconde as imagens que você subiu nos testes locais
+/public/uploads/
+
+# Arquivos do sistema operacional Ubuntu/Linux
+.DS_Store
