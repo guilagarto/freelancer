@@ -15,21 +15,23 @@
     </div>
 
     <!-- NAVEGAÇÃO / FILTROS POR CATEGORIA (BOTÕES) -->
-    <div class="flex flex-wrap justify-center gap-2 mb-12 border-b border-gray-100 pb-6">
-        <!-- Botão para limpar o filtro e ver todos -->
-        <a href="/freela-app/public/profissionais" 
-           class="px-4 py-2 rounded-xl text-xs font-semibold transition <?php echo empty($selectedCategory) ? 'bg-indigo-600 text-white shadow-xs' : 'bg-gray-100 text-gray-600 hover:bg-gray-200'; ?>">
+        <!-- NAVEGAÇÃO POR CATEGORIAS COM SCROLL HORIZONTAL NO CELULAR -->
+    <!-- overflow-x-auto e whitespace-nowrap permitem deslizar os botões com o dedo no celular -->
+    <div class="flex overflow-x-auto whitespace-nowrap gap-2 mb-8 border-b border-gray-100 pb-4 px-4 sm:px-0 sm:justify-center scrollbar-hide">
+        
+        <a href="/profissionais" 
+           class="inline-block px-4 py-2 rounded-xl text-xs font-semibold transition shrink-0 <?php echo empty($selectedCategory) ? 'bg-indigo-600 text-white shadow-xs' : 'bg-gray-100 text-gray-600 hover:bg-gray-200'; ?>">
             🌐 Ver Todos
         </a>
 
-        <!-- Gera dinamicamente um botão para cada categoria que existe no banco -->
         <?php foreach ($categoriesList as $cat): ?>
-            <a href="/freela-app/public/profissionais?categoria=<?php echo urlencode($cat); ?>" 
-               class="px-4 py-2 rounded-xl text-xs font-semibold transition <?php echo ($selectedCategory === $cat) ? 'bg-indigo-600 text-white shadow-xs' : 'bg-gray-100 text-gray-600 hover:bg-gray-200'; ?>">
+            <a href="/profissionais?categoria=<?php echo urlencode($cat); ?>" 
+               class="inline-block px-4 py-2 rounded-xl text-xs font-semibold transition shrink-0 <?php echo ($selectedCategory === $cat) ? 'bg-indigo-600 text-white shadow-xs' : 'bg-gray-100 text-gray-600 hover:bg-gray-200'; ?>">
                 📁 <?php echo htmlspecialchars($cat); ?>
             </a>
         <?php endforeach; ?>
     </div>
+
         </div> <!-- Fim dos botões de filtro -->
 
     <!-- INJEÇÃO DO ANÚNCIO NO TOPO DA BUSCA -->

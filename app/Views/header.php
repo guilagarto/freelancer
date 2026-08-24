@@ -13,42 +13,35 @@
     <!-- Barra de Navegação -->
     <nav class="bg-white shadow-sm border-b border-gray-100 sticky top-0 z-50">
     <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div class="flex justify-between h-16 items-center">
-            
-            <!-- Logotipo apontando direto para a raiz pública -->
-            <a href="/" class="flex items-center gap-2 cursor-pointer">
-                <span class="text-2xl">🚀</span>
-                <span class="text-xl font-bold text-indigo-600 tracking-tight">FreelaApp</span>
-            </a>
-            
-            <!-- Links do Menu totalmente limpos para a Internet -->
-            <div class="flex items-center gap-4">
-                <a href="/" class="text-sm text-gray-600 hover:text-indigo-600 font-medium transition">Início</a>
-                <a href="/profissionais" class="text-sm text-gray-600 hover:text-indigo-600 font-medium transition">Profissionais</a>
-                <a href="/noticias" class="text-sm text-gray-600 hover:text-indigo-600 font-medium transition">Notícias & Vagas</a>
-                <a href="/sobre" class="text-sm text-gray-600 hover:text-indigo-600 font-medium transition">Sobre/Contato</a>
+                   <!-- Links do Menu Otimizados e Compactos para Mobile -->
+            <!-- Reduzido o gap no celular (gap-2) e ampliado no PC (md:gap-4) -->
+            <div class="flex items-center gap-2 md:gap-4">
+                <a href="/" class="text-xs md:text-sm text-gray-600 hover:text-indigo-600 font-medium transition">Início</a>
+                <a href="/profissionais" class="text-xs md:text-sm text-gray-600 hover:text-indigo-600 font-medium transition">Buscar</a>
+                <a href="/noticias" class="text-xs md:text-sm text-gray-600 hover:text-indigo-600 font-medium transition hidden sm:inline-block">Vagas</a> <!-- Esconde esse link em telas muito pequenas para não esmagar o topo -->
                 
-                <!-- Links com travas de sessão dinâmicas -->
                 <?php if (isset($_SESSION['admin_id'])): ?>
-                    <a href="/admin/painel" class="text-xs bg-gray-900 text-amber-400 px-3 py-1.5 rounded-lg font-bold border border-amber-500/30 hover:bg-gray-800 transition">Painel Admin 👑</a>
-                    <a href="/admin/sair" class="text-xs text-red-500 hover:text-red-600 font-medium transition">Sair</a>
+                    <a href="/admin/painel" class="text-[10px] md:text-xs bg-gray-900 text-amber-400 px-2 py-1 rounded-lg font-bold border border-amber-500/30">Admin 👑</a>
+                    <a href="/admin/sair" class="text-xs text-red-500 hover:underline">Sair</a>
 
                 <?php elseif (isset($_SESSION['user_id'])): ?>
                     <?php if ($_SESSION['user_type'] === 'professional'): ?>
-                        <a href="/painel" class="bg-indigo-50 text-indigo-700 px-4 py-2 rounded-xl text-xs font-bold border border-indigo-100 hover:bg-indigo-100 transition">Meu Painel 🛠️</a>
+                        <a href="/painel" class="bg-indigo-50 text-indigo-700 px-2.5 py-1.5 rounded-lg text-[11px] font-bold border border-indigo-100">Painel 🛠️</a>
                     <?php else: ?>
-                        <a href="/meus-pedidos" class="text-sm text-indigo-600 hover:text-indigo-700 font-semibold transition">Meus Pedidos 📋</a>
+                        <a href="/meus-pedidos" class="text-xs text-indigo-600 font-semibold">Pedidos 📋</a>
                     <?php endif; ?>
                     
-                    <span class="text-xs font-semibold text-gray-700 max-w-[120px] truncate">Olá, <?php echo htmlspecialchars($_SESSION['user_name']); ?> 👋</span>
-                    <a href="/sair" class="text-xs text-red-600 hover:text-red-700 font-medium transition">Sair</a>
+                    <!-- Opcional: O nome do usuário fica escondido no celular (hidden) e aparece no PC (md:inline-block) para economizar espaço crítico de tela -->
+                    <span class="text-xs font-semibold text-gray-700 max-w-[100px] truncate hidden md:inline-block">
+                        Olá, <?php echo htmlspecialchars($_SESSION['user_name']); ?> 👋
+                    </span>
+                    <a href="/sair" class="text-xs text-red-600 font-medium transition ml-1">Sair</a>
 
                 <?php else: ?>
-                    <a href="/login" class="bg-indigo-600 text-white px-4 py-2 rounded-xl text-sm font-medium hover:bg-indigo-700 transition shadow-xs cursor-pointer">Entrar</a>
+                    <a href="/login" class="bg-indigo-600 text-white px-3 py-1.5 rounded-lg text-xs font-medium hover:bg-indigo-700 transition shadow-xs">Entrar</a>
                 <?php endif; ?>
             </div>
 
-        </div>
     </div>
 </nav>
 
